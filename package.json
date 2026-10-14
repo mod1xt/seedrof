@@ -1,0 +1,13 @@
+{
+  "name": "alpha-vercel",
+  "version": "1.0.0",
+  "description": "Alpha App - Vercel + Neon PostgreSQL",
+  "private": true,
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "node-fetch": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
