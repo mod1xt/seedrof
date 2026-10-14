@@ -1,0 +1,645 @@
+/* ════════════════════════════════════════
+   Web3 Theme Override — web3-theme.css
+   Replaces Alpha's black/dark theme
+   with Old-Road summer/winter aesthetic
+   ════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=El+Messiri:wght@400;500;700&display=swap');
+
+/* ── CSS Variables – summer (default) ── */
+:root {
+  --w3-font:    "El Messiri", "Outfit", sans-serif;
+  --w3-display: "Cormorant Garamond", serif;
+  --w3-radius:  14px;
+  --w3-shadow:  0 8px 28px rgba(0,0,0,.28);
+}
+
+html[data-season="summer"], html:not([data-season]) {
+  --w3-body:           #140808;
+  --w3-panel:          rgba(42,16,16,.84);
+  --w3-panel-solid:    #261010;
+  --w3-gold:           #f0b54a;
+  --w3-gold-bright:    #ffd978;
+  --w3-sand:           #f0dfc2;
+  --w3-sand-muted:     #c4a882;
+  --w3-ember:          #ff8a3d;
+  --w3-line:           rgba(240,181,74,.28);
+  --w3-line-soft:      rgba(240,181,74,.14);
+  --w3-glow:           rgba(240,181,74,.34);
+  --w3-accent-wash:    rgba(255,170,60,.12);
+  --w3-season-sky:     rgba(140,28,22,.28);
+}
+
+html[data-season="winter"] {
+  --w3-body:           #071014;
+  --w3-panel:          rgba(12,28,34,.86);
+  --w3-panel-solid:    #0e1c22;
+  --w3-gold:           #8db8c1;
+  --w3-gold-bright:    #d7eef2;
+  --w3-sand:           #e6eef0;
+  --w3-sand-muted:     #9bb0b4;
+  --w3-ember:          #8ec8d4;
+  --w3-line:           rgba(141,184,193,.38);
+  --w3-line-soft:      rgba(141,184,193,.18);
+  --w3-glow:           rgba(173,210,216,.32);
+  --w3-accent-wash:    rgba(141,184,193,.14);
+  --w3-season-sky:     rgba(160,220,255,.22);
+}
+
+/* ── Body & Background ── */
+html, body {
+  font-family: var(--w3-font) !important;
+  color: var(--w3-sand) !important;
+}
+
+html[data-season="summer"] body,
+html:not([data-season]) body {
+  background:
+    radial-gradient(1100px 460px at 50% -8%, rgba(90,16,12,.55), transparent 58%),
+    linear-gradient(180deg, #2a0c0c 0%, #140808 34%, #0e0606 100%) !important;
+}
+
+html[data-season="winter"] body {
+  background:
+    radial-gradient(900px 380px at 50% -8%, var(--w3-season-sky), transparent 60%),
+    var(--w3-body) !important;
+}
+
+/* Remove alpha's pseudo-element backgrounds */
+body::before, body::after {
+  display: none !important;
+}
+
+/* Winter snow effect */
+html[data-season="winter"] body::after {
+  display: block !important;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 3500;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 12% 18%, rgba(255,255,255,.95), transparent),
+    radial-gradient(1.5px 1.5px at 28% 62%, rgba(230,245,255,.85), transparent),
+    radial-gradient(2.5px 2.5px at 44% 8%,  rgba(255,255,255,.9), transparent),
+    radial-gradient(2px 2px at 76% 73%, rgba(255,255,255,.88), transparent),
+    radial-gradient(1.5px 1.5px at 89% 22%, rgba(220,240,255,.8), transparent);
+  background-size: 420px 420px, 360px 360px, 520px 520px, 460px 460px, 340px 340px;
+  animation: w3PolarSnow 22s linear infinite;
+  opacity: .6;
+}
+
+@keyframes w3PolarSnow {
+  from { background-position: 0 0, 40px 0, -20px 0, -40px 0, 20px 0; }
+  to   { background-position: 40px 900px, -80px 720px, 60px 1040px, 90px 860px, -50px 780px; }
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: linear-gradient(to right,
+    rgba(240,181,74,.06),
+    rgba(42,16,16,.85) 50%,
+    rgba(240,181,74,.04)
+  ) !important;
+  border-bottom: 1px solid var(--w3-line) !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,.35), 0 1px 0 var(--w3-line-soft) !important;
+}
+
+html[data-season="winter"] .topbar {
+  background: linear-gradient(to right,
+    rgba(141,184,193,.06),
+    rgba(12,28,34,.88) 50%,
+    rgba(141,184,193,.04)
+  ) !important;
+  border-bottom: 1px solid var(--w3-line) !important;
+}
+
+/* Topbar name */
+.topbar-name span, .topbar-name {
+  color: var(--w3-gold-bright) !important;
+  -webkit-text-fill-color: var(--w3-gold-bright) !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+/* ── ICON BUTTONS (topbar nav) — moved to bottom ── */
+.topbar-right {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: auto !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 1.2rem !important;
+  padding: 0.7rem 1.5rem calc(0.7rem + env(safe-area-inset-bottom, 0px)) !important;
+  background: linear-gradient(to top,
+    rgba(20, 8, 8, 0.98) 0%,
+    rgba(20, 8, 8, 0.92) 70%,
+    transparent 100%
+  ) !important;
+  border-top: 1px solid var(--w3-line) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+html[data-season="winter"] .topbar-right {
+  background: linear-gradient(to top,
+    rgba(7, 16, 20, 0.98) 0%,
+    rgba(7, 16, 20, 0.92) 70%,
+    transparent 100%
+  ) !important;
+  border-top: 1px solid var(--w3-line) !important;
+}
+
+.icon-btn {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 14px !important;
+  background: var(--w3-panel) !important;
+  border: 1px solid var(--w3-line-soft) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+  cursor: pointer !important;
+  transition: all .25s !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.icon-btn:hover,
+.icon-btn:active {
+  border-color: var(--w3-gold) !important;
+  background: var(--w3-accent-wash) !important;
+  box-shadow: 0 0 14px var(--w3-glow) !important;
+}
+
+.icon-btn svg {
+  width: 18px !important;
+  height: 18px !important;
+  color: var(--w3-sand-muted) !important;
+  transition: color .2s !important;
+}
+
+.icon-btn:hover svg,
+.icon-btn:active svg {
+  color: var(--w3-gold-bright) !important;
+}
+
+.icon-btn img {
+  width: 20px !important;
+  height: 20px !important;
+  opacity: .7 !important;
+  transition: opacity .2s !important;
+  filter: sepia(0.4) saturate(0.8) !important;
+}
+
+.icon-btn:hover img { opacity: 1 !important; filter: sepia(0.4) saturate(1.2) brightness(1.2) !important; }
+
+/* Nav labels under icons */
+.icon-btn::after {
+  font-family: var(--w3-font);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--w3-sand-muted);
+  text-transform: uppercase;
+  margin-top: 3px;
+  display: block;
+  line-height: 1;
+  transition: color .2s;
+}
+
+.icon-btn-dash::after  { content: "Stats"; }
+.icon-btn-store::after { content: "Store"; }
+.icon-btn-settings::after { content: "Settings"; }
+
+.icon-btn:hover::after { color: var(--w3-gold-bright); }
+
+/* Add bottom padding to main content so nav doesn't overlap */
+#_alfaBody {
+  padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+/* ── CARDS ── */
+.crypto-card, .s-card, .spm-card, .scan-card, .trm, .blockchains-wrap,
+.pending-block, .dash-compare-col, .info-dialog, .overlay-dialog, .wsel-card,
+.found-block, .pm-dialog {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.025), transparent 40%),
+    var(--w3-panel) !important;
+  border-color: var(--w3-line) !important;
+  border-radius: 14px !important;
+}
+
+.sa-plan-card {
+  background: var(--w3-panel) !important;
+  border-color: var(--w3-line-soft) !important;
+  border-radius: 14px !important;
+}
+
+.sa-plan-card.sa-plan-popular {
+  border-color: var(--w3-gold) !important;
+  box-shadow: 0 0 24px var(--w3-glow) !important;
+}
+
+/* ── BACK HEADER (overlay headers) ── */
+.back-header {
+  background: linear-gradient(to right,
+    rgba(240,181,74,.05),
+    var(--w3-panel-solid) 50%,
+    rgba(240,181,74,.03)
+  ) !important;
+  border-bottom: 1px solid var(--w3-line-soft) !important;
+  box-shadow: none !important;
+}
+
+.back-header-title, .info-dialog-title {
+  color: var(--w3-sand) !important;
+  font-family: var(--w3-font) !important;
+}
+
+/* ── BUTTONS ── */
+.btn-base.btn-primary, .btn-base.btn-scan-mining {
+  background: linear-gradient(135deg, var(--w3-gold), #c48a2a) !important;
+  color: #1a0c04 !important;
+  border: none !important;
+  font-family: var(--w3-font) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 18px rgba(240,181,74,.35) !important;
+}
+
+.btn-base.btn-primary:hover, .btn-base.btn-scan-mining:hover {
+  box-shadow: 0 6px 24px rgba(240,181,74,.55) !important;
+}
+
+.btn-base.btn-outline {
+  border-color: var(--w3-line) !important;
+  color: var(--w3-sand) !important;
+  background: var(--w3-panel) !important;
+}
+
+.btn-deselect, .btn-deselect-wallet {
+  border-color: var(--w3-line) !important;
+  color: var(--w3-sand-muted) !important;
+  background: var(--w3-panel) !important;
+}
+
+.btn-deselect:hover, .btn-deselect-wallet:hover {
+  border-color: var(--w3-gold) !important;
+  color: var(--w3-gold-bright) !important;
+}
+
+/* ── SCREENS & MAIN AREAS ── */
+.screen, #splash-root {
+  background: transparent !important;
+}
+
+/* ── TEXT COLORS ── */
+.neon-text, .pending-val {
+  color: var(--w3-gold-bright) !important;
+  text-shadow: 0 0 16px var(--w3-glow) !important;
+  -webkit-text-fill-color: var(--w3-gold-bright) !important;
+}
+
+/* ── BLOCKCHAINS ── */
+.blockchains-wrap {
+  border-color: var(--w3-line-soft) !important;
+}
+
+.blockchains-title {
+  color: var(--w3-sand) !important;
+}
+
+.blockchains-sub, .chain-sub {
+  color: var(--w3-sand-muted) !important;
+}
+
+.chain-chip {
+  background: var(--w3-panel) !important;
+  border-color: var(--w3-line-soft) !important;
+  color: var(--w3-sand-muted) !important;
+}
+
+.chain-chip.selected {
+  border-color: var(--w3-gold) !important;
+  color: var(--w3-gold-bright) !important;
+  background: var(--w3-accent-wash) !important;
+  box-shadow: 0 0 10px var(--w3-glow) !important;
+}
+
+/* ── TERMINAL / SCAN AREA ── */
+.trm-body {
+  background: rgba(20,8,8,.7) !important;
+  border-top: 1px solid var(--w3-line-soft) !important;
+}
+
+.trm-body::before, .trm-body::after { display: none !important; }
+
+/* ── SECTION TITLES ── */
+.sa-dash-title, .dash-section-title, .blockchains-title {
+  color: var(--w3-sand) !important;
+}
+
+.sa-dash-title svg, .dash-section-title svg {
+  color: var(--w3-gold) !important;
+}
+
+/* ── SCAN BUTTON ── */
+#scanBtn {
+  background: linear-gradient(135deg, #b87a2a, var(--w3-gold)) !important;
+  color: #1a0c04 !important;
+  box-shadow: 0 0 20px rgba(240,181,74,.4) !important;
+  border: none !important;
+}
+
+/* ── CONNECT WALLET BUTTON ── */
+#mainConnectBtn {
+  border-color: var(--w3-line) !important;
+  color: var(--w3-sand-muted) !important;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar-thumb {
+  background: var(--w3-gold) !important;
+  opacity: .5 !important;
+}
+
+/* ── ARCHIVE PILL ── */
+.archive-pill {
+  background: var(--w3-panel) !important;
+  border-color: var(--w3-line-soft) !important;
+  color: var(--w3-sand-muted) !important;
+}
+
+/* ── SEASON SWITCH (from web3) ── */
+.season-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .28rem .35rem;
+  border-radius: 999px;
+  border: 1px solid var(--w3-line);
+  background: rgba(18,16,12,.82);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.35);
+}
+
+html[data-season="winter"] .season-switch {
+  background: rgba(8,16,20,.88);
+}
+
+.season-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 28px;
+  padding: .25rem .7rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--w3-font);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: all .2s;
+  color: var(--w3-sand-muted);
+}
+
+.season-switch-btn[data-season-set="summer"] { color: #e0b45a; }
+.season-switch-btn[data-season-set="winter"] { color: #8ec4d4; }
+
+.season-switch-btn.is-active[data-season-set="summer"] {
+  border-color: rgba(224,180,90,.7);
+  background: rgba(224,180,90,.08);
+  color: #f0c56a;
+}
+
+.season-switch-btn.is-active[data-season-set="winter"] {
+  border-color: rgba(173,210,216,.85);
+  background: rgba(141,184,193,.16);
+  color: #e6f4f7;
+}
+
+.season-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.season-switch-btn[data-season-set="summer"] .season-dot {
+  background: #e0b45a;
+  box-shadow: 0 0 5px rgba(224,180,90,.55);
+}
+
+.season-switch-btn[data-season-set="winter"] .season-dot {
+  background: #8ec4d4;
+  box-shadow: 0 0 7px rgba(173,210,216,.7);
+}
+
+/* ── SEASON SWITCH TOPBAR WRAPPER ── */
+#seasonSwitchWrap {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding-right: .2rem;
+}
+
+/* ── EMBER PARTICLES (summer) ── */
+#ember-fx {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3500;
+  overflow: hidden;
+  display: none;
+}
+html[data-season="summer"] #ember-fx,
+html:not([data-season]) #ember-fx { display: block; }
+
+.ember-particle {
+  position: absolute;
+  bottom: -10px;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffd978, #ff8a3d);
+  box-shadow: 0 0 4px #ff8a3d, 0 0 8px rgba(255,170,60,.5);
+  opacity: 0;
+  animation: w3EmberRise var(--dur, 4s) var(--delay, 0s) ease-in infinite;
+}
+
+@keyframes w3EmberRise {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  10%  { opacity: .85; }
+  50%  { transform: translateY(-45vh) translateX(var(--drift,12px)) scale(.8); opacity: .6; }
+  90%  { opacity: .15; }
+  100% { transform: translateY(-100vh) translateX(var(--drift,12px)) scale(.3); opacity: 0; }
+}
+
+/* ── SEASON FX OVERLAY ── */
+#season-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 40000;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .1s;
+}
+#season-fx.is-on { opacity: 1; }
+.season-fx-veil, .season-fx-ring, .season-fx-spark, .season-fx-title { position: absolute; pointer-events: none; }
+.season-fx-veil  { inset: -8%; opacity: 0; }
+.season-fx-ring  {
+  left: 50%; top: 38%;
+  width: 140px; height: 140px;
+  margin: -70px 0 0 -70px;
+  border-radius: 50%; opacity: 0;
+}
+.season-fx-spark { inset: 0; opacity: 0; }
+.season-fx-title {
+  left: 50%; top: 42%;
+  transform: translate(-50%,-50%);
+  color: #fff;
+  font-family: var(--w3-display), serif;
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  text-shadow: 0 8px 28px rgba(0,0,0,.45);
+  white-space: nowrap;
+  opacity: 0;
+}
+
+#season-fx.to-winter .season-fx-veil {
+  background: radial-gradient(ellipse 80% 70% at 50% 18%, rgba(210,245,255,.42), rgba(10,36,48,.28) 46%, transparent 72%);
+  animation: w3SeasonVeil 1.15s ease forwards;
+}
+#season-fx.to-winter .season-fx-ring {
+  border: 2px solid rgba(220,245,255,.7);
+  box-shadow: 0 0 28px rgba(170,230,255,.45);
+  animation: w3SeasonRing 1.05s cubic-bezier(.16,.84,.32,1) forwards;
+}
+#season-fx.to-winter .season-fx-title {
+  color: #e6f4f7;
+  text-shadow: 0 0 22px rgba(160,220,255,.55), 0 8px 28px rgba(0,0,0,.45);
+  animation: w3SeasonTitle 1.15s ease forwards;
+}
+#season-fx.to-summer .season-fx-veil {
+  background: radial-gradient(ellipse 70% 65% at 50% 42%, rgba(255,214,110,.46), rgba(90,36,8,.26) 50%, transparent 74%);
+  animation: w3SeasonVeil 1.15s ease forwards;
+}
+#season-fx.to-summer .season-fx-ring {
+  border: 2px solid rgba(255,214,120,.75);
+  box-shadow: 0 0 32px rgba(255,176,70,.5);
+  animation: w3SeasonRing 1.05s cubic-bezier(.16,.84,.32,1) forwards;
+}
+#season-fx.to-summer .season-fx-title {
+  color: #ffe49a;
+  text-shadow: 0 0 22px rgba(255,196,80,.55), 0 8px 28px rgba(0,0,0,.45);
+  animation: w3SeasonTitle 1.15s ease forwards;
+}
+
+@keyframes w3SeasonVeil {
+  0%   { opacity: 0; transform: scale(1.04); }
+  18%  { opacity: 1; transform: scale(1); }
+  58%  { opacity: .78; }
+  100% { opacity: 0; transform: scale(1.02); }
+}
+@keyframes w3SeasonRing {
+  0%   { transform: scale(.2); opacity: .8; }
+  70%  { opacity: .35; }
+  100% { transform: scale(2.15); opacity: 0; }
+}
+@keyframes w3SeasonTitle {
+  0%   { opacity: 0; letter-spacing: .46em; filter: blur(6px); }
+  22%  { opacity: 1; letter-spacing: .28em; filter: blur(0); }
+  62%  { opacity: 1; }
+  100% { opacity: 0; letter-spacing: .34em; filter: blur(4px); }
+}
+
+/* ── DISABLE THE ALPHA BUILT-IN THEMES (dots in settings) ── */
+.theme-picker { display: none !important; }
+.theme-bar { display: none !important; }
+
+/* ── MISC COLOR OVERRIDES ── */
+.sp-stat-label { color: var(--w3-sand-muted) !important; }
+.sp-stat-val   { color: var(--w3-gold-bright) !important; }
+.sa-muted-txt, .s-tog-sub, .blockchains-sub { color: var(--w3-sand-muted) !important; }
+
+/* Withdraw / boost button */
+.btn-withdraw, .btn-base.btn-withdraw {
+  background: linear-gradient(135deg, rgba(240,181,74,.18), rgba(240,181,74,.08)) !important;
+  border-color: var(--w3-gold) !important;
+  color: var(--w3-gold-bright) !important;
+}
+
+/* Payment cards */
+.pm-card {
+  background: var(--w3-panel) !important;
+  border-color: var(--w3-line-soft) !important;
+  color: var(--w3-sand) !important;
+}
+.pm-card.selected, .pm-card:hover {
+  border-color: var(--w3-gold) !important;
+  background: var(--w3-accent-wash) !important;
+}
+
+/* Settings switch */
+.s-switch input:checked + .s-slider {
+  background: var(--w3-gold) !important;
+}
+
+/* Wallet select card */
+.wsel-opt {
+  background: var(--w3-panel) !important;
+  border-color: var(--w3-line-soft) !important;
+}
+.wsel-opt:hover {
+  border-color: var(--w3-gold) !important;
+  box-shadow: 0 0 12px var(--w3-glow) !important;
+}
+
+/* ── Season switch stays in topbar (top-right), NOT in bottom nav ── */
+.topbar-right {
+  /* Override: season switch stays visible in topbar area */
+  flex-wrap: nowrap !important;
+}
+
+/* The season switch pill stays in topbar row normally */
+.season-switch {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* But the icon buttons get repositioned to bottom */
+.icon-btn-dash,
+.icon-btn-store,
+.icon-btn-settings {
+  /* These get their position from the parent flexbox which is fixed to bottom */
+}
+
+/* We need to split: season switch stays in topbar, icons go to bottom */
+/* Restructure: clone approach via CSS - hide icons in topbar and show a bottom bar */
+
+/* Actually: move the ENTIRE topbar-right to bottom, but position the season-switch separately */
+/* Simpler solution: topbar-right at bottom hides season switch, only shows icon buttons */
+.topbar-right .season-switch {
+  display: none !important; /* Hidden from bottom nav */
+}
+
+/* Add season switch directly into topbar-left area via a separate fixed element */
+#w3-season-topbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  padding: 0.55rem 0.75rem;
+  display: flex;
+  align-items: center;
+}
